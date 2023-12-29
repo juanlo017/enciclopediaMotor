@@ -12,6 +12,7 @@ class Pokemon(models.Model):
     weight = models.FloatField(max_length=100)
     height = models.FloatField(max_length=100)
     color = models.CharField(max_length=100)
+    description = models.TextField(max_length=100)
     picture_url = models.CharField(max_length=100)
 
     types = models.ManyToManyField(PokemonType)

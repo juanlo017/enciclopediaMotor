@@ -28,7 +28,8 @@ def populate_DB():
                                         weight=weight_to_float, 
                                         height=height_to_float, 
                                         color=pokemon_att[6], 
-                                        picture_url=pokemon_att[7]
+                                        description=pokemon_att[7],
+                                        picture_url=pokemon_att[8]
                                     )[0]
             
             pokemon.types.set(pokemon_types)
