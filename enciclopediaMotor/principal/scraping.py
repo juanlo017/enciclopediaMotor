@@ -1,8 +1,5 @@
-from principal.models import Car, Location, CarType, FuelType, GearboxType
-
 from bs4 import BeautifulSoup
 import requests
-import re
 
 # SCRAPING FROM WEB:https://www.coches.net/nuevo/km-0/, 
 # https://www.coches.net/nuevo/km-0/?pg=2 HASTA 
@@ -41,12 +38,14 @@ def get_pokemon_details(url):
     pokemon_details = soup.find('div', class_='cuadro_pokemon')
 
     name = pokemon_details.find('div', class_='titulo').text
+    picture_url = pokemon_details.find('div', class_='vnav_datos').find('a', class_='image').attrs['href']
+    complete_picture_url = f"https://www.wikidex.net/{picture_url}"
     number = pokemon_details.find('span', id='numeronacional').text
     
     tabla_datos = pokemon_details.find('table', class_='datos resalto')
 
     generation = tabla_datos.find('tr', title="Generación en la que apareció por primera vez").find('td').find('a').text
-    
+
     types = tabla_datos.find('tr', title="Tipos a los que pertenece").find('td').find_all('a')
     list_types = []
     for type in types:
@@ -65,4 +64,18 @@ def get_pokemon_details(url):
     description = soup.find('table', class_='pokedex radius10 tfx').find_all('tr')[1].find_all('td')
     description = ''.join(el.text for el in description).replace('\n','')
 
-    return (name, number, generation, list_types, weight, height, color, description)
+    pokemon = [name, number, generation, list_types, weight, height, color, description, complete_picture_url]
+    return pokemon
+
+def save_scrapped_data_to_file():
+    pokemons = get_pokemons()
+    print(pokemons)
+    with open('pokemons.txt', 'w', encoding='utf-8') as f:
+        for pokemon in pokemons:
+            for att in pokemon:
+                if type(att) is not list:
+                    f.write(att + ';')
+                else:
+                    f.write(','.join(att) + ';')
+            f.write('\n')
+    return len(pokemons)
