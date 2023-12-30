@@ -21,7 +21,8 @@ from principal import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home),   
-    path('scrapear/', views.scrapear),
-    path('cargar/', views.cargar),
+    path('scrapear/', views.scrap_data),
+    path('cargar/', views.load_db),
+    path('cargar_whoosh/', views.load_whoosh),
 
 ]
