@@ -34,7 +34,7 @@ def populate_DB():
     return pokemon_counter
 
 def almacenar_datos_whoosh():
-    schem = Schema(name=ID(stored=True), 
+    schem = Schema(name=TEXT(stored=True), 
                    number=NUMERIC(stored=True), 
                    generation=KEYWORD(stored=True), 
                    weight=NUMERIC(stored=True, numtype=float), 
@@ -62,3 +62,24 @@ def almacenar_datos_whoosh():
                             types=','.join([type.name for type in pokemon.types.all()]))
     writer.commit()
     return len(pokemons)
+
+def buscar_whoosh_titulo_descripcion(query):
+    ix = open_dir("Index")
+    with ix.searcher() as searcher:
+        query = MultifieldParser(["name", "description"], ix.schema, group=OrGroup).parse(query)
+        results = searcher.search(query)
+        return results
+
+def buscar_whoosh_tipo(query):
+    ix = open_dir("Index")
+    with ix.searcher() as searcher:
+        query = QueryParser("types", ix.schema).parse(query)
+        results = searcher.search(query)
+        return results
+
+def buscar_whoosh_entre_valores(query1, query2, field='number'):
+    ix = open_dir("Index")
+    with ix.searcher() as searcher:
+        query = QueryParser(field, ix.schema).parse(u"["+query1+" TO "+query2+"]")
+        results = searcher.search(query)
+        return results

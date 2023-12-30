@@ -21,7 +21,7 @@ def load_whoosh(request):
     msg = 'Se han guardado ' + str(num_pokemons) + ' pokemons en el Index de Whoosh'
     return render(request, 'cargar.html', {'msg':msg})
 
-    
+
 
 
 
