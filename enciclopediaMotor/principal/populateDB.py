@@ -63,13 +63,6 @@ def load_data_whoosh():
     writer.commit()
     return len(pokemons)
 
-def search_whoosh_type(input):
-    ix = open_dir("Index")
-    with ix.searcher() as searcher:
-        query = QueryParser("types", ix.schema).parse(input)
-        results = searcher.search(input)
-        return results
-
 def search_whoosh_range_number(query1, query2, field='number'):
     ix = open_dir("Index")
     with ix.searcher() as searcher:
