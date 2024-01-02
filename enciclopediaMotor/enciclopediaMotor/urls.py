@@ -24,5 +24,6 @@ urlpatterns = [
     path('scrapear/', views.scrap_data),
     path('cargar/', views.load_db),
     path('cargar_whoosh/', views.load_whoosh),
-
+    path('buscar_nombre_descripcion/', views.search_whoosh_title_description),
+    path('buscar_por_tipo/', views.search_whoosh_type),
 ]

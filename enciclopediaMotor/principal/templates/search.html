@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block encabezado %}
+<h1> Busqueda </h1>
+{% endblock %}
+
+{% block contenido %}
+    <form method='post' action=''>{% csrf_token %}
+        {{form}}
+        <br/>
+        <input type='submit' value='Enviar'>
+    </form>
+
+    {% if results %}
+        <h2>Pokemons</h2>
+        <ul>
+            {% for result in results %}
+                <li>{{result.name}}</li>
+            {% endfor %}
+        </ul>
+    {% endif%}
+{% endblock %}
