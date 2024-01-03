@@ -26,4 +26,6 @@ urlpatterns = [
     path('cargar_whoosh/', views.load_whoosh),
     path('buscar_nombre_descripcion/', views.search_whoosh_title_description),
     path('buscar_por_tipo/', views.search_whoosh_type),
+    path('buscar_por_rango/', views.search_whoosh_range),
+    path('buscar_por_rango_float/', views.search_whoosh_range_float),
 ]

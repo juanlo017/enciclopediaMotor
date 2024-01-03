@@ -13,6 +13,9 @@ def populate_DB():
             pokemon_att = line.split(';')
             pokemon_types = []
             for type in pokemon_att[3].split(','):
+                type = type.lower()
+                if 'title' in type: # filter wrong data collected while scrapping.
+                    continue
                 pokemon_type = PokemonType.objects.get_or_create(name=type)[0]
                 pokemon_type.save()
                 pokemon_types.append(pokemon_type)
@@ -59,13 +62,6 @@ def load_data_whoosh():
                             color=pokemon.color, 
                             description=pokemon.description, 
                             picture_url=pokemon.picture_url,
-                            types=','.join([type.name for type in pokemon.types.all()]))
+                            types=','.join((type.name.lower() for type in pokemon.types.all())))
     writer.commit()
     return len(pokemons)
-
-def search_whoosh_range_number(query1, query2, field='number'):
-    ix = open_dir("Index")
-    with ix.searcher() as searcher:
-        query = QueryParser(field, ix.schema).parse(u"["+query1+" TO "+query2+"]")
-        results = searcher.search(query)
-        return results

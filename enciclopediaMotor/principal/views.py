@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from principal.populateDB import *
 from principal.scraping import save_scrapped_data_to_file
-from principal.forms import SearchTitleDescription, SearchByType
+from principal.forms import SearchTitleDescription, SearchByType, SearchRange, SearchRangeFloat
 
 
 def home(request):
@@ -60,5 +60,45 @@ def search_whoosh_type(request):
             print('no valido')
     return render(request, 'search.html', {'form':form})
 
-def search():
-    pass
+def search_whoosh_range(request):
+    form = SearchRange()
+    if request.method == 'POST':
+        form = SearchRange(request.POST)
+        if form.is_valid():
+            query1 = form.cleaned_data['min']
+            query2 = form.cleaned_data['max']
+            field = form.cleaned_data['field']
+            ix = open_dir("Index")
+            with ix.searcher() as searcher:
+                rng = '['+str(query1)+' TO '+str(query2)+']'
+                query = QueryParser(field, ix.schema).parse(rng)
+                results = searcher.search(query, limit=None)
+                msg = f'Se han encontrado {len(results)} resultados para la búsqueda en rango: {query1} - {query2}'
+                return render(request, 'search.html', {'results':results, 'msg':msg, 'form':form})
+        else:
+            print('no valido')
+    return render(request, 'search.html', {'form':form})
+
+def search_whoosh_range_float(request):
+    form = SearchRangeFloat()
+    if request.method == 'POST':
+        form = SearchRangeFloat(request.POST)
+        if form.is_valid():
+            query1 = form.cleaned_data['min']
+            query2 = form.cleaned_data['max']
+            field = form.cleaned_data['field']
+            ix = open_dir("Index")
+            with ix.searcher() as searcher:
+                rng = '['+str(query1)+' TO '+str(query2)+']'
+                query = QueryParser(field, ix.schema).parse(rng)
+                results = searcher.search(query, limit=None)
+                msg = f'Se han encontrado {len(results)} resultados para la búsqueda en rango: {query1} - {query2}'
+                return render(request, 'search.html', {'results':results, 'msg':msg, 'form':form})
+        else:
+            print('no valido')
+    return render(request, 'search.html', {'form':form})
+
+
+
+
+
