@@ -1,12 +1,15 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang='es'>
 <head>
-  <meta charset='utf-8'>
+	<meta charset='utf-8'>
+	<link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
   <header> 
   	{% block encabezado %}{% endblock %}
-  	<nav>
+  	<nav class='pokemenu'>
   		<dl>
 			<dd><a href='/'>Home</h3></dd>
 			<dd><a href='/scrapear'> Scrape data from: 'https://www.wikidex.net/wiki/Lista_de_Pokémon'  <strong>WARNING: It takes long</strong></a></dd>
