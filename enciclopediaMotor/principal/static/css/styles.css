@@ -1,13 +1,14 @@
 .pokemenu dd{
     display: inline-block;
     margin-right: 20px;
+    background-color: #6CDAFF;
 }
 
 .pokemenu dd a{
     text-decoration: none;
-    color: #fff;
+    color: #000;
 }
 
 .pokemenu dd a:hover{
-    color: #000;
+    color: #06e344;
 }

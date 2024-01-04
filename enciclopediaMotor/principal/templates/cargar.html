@@ -1,12 +1,15 @@
 
 {% extends 'base.html' %}
 
-{% block encabezado %}
-<h1> Inicio </h1>
-{% endblock %}
-
 {% block contenido %}
-    <div>
-        <h3>{{msg}}</h2>
-    </div>
+<div class="container text-center">
+    <div class="container text-center">
+        <div class="row justify-content-md-center">
+          <div class="col col-lg-2"></div>
+          <div class="col-md-auto card">
+            <h3>{{msg}}</h2></div>
+          <div class="col col-lg-2"></div>
+        </div>
+    </div>      
+</div>
 {% endblock %}
